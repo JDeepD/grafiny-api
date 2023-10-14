@@ -9,7 +9,8 @@
   "scripts": {
     "start": "pnpm build && sls offline --httpPort 5000",
     "start-win": "pnpm build-win && sls offline --httpPort 5000",
-    "start-server": "pnpm build-win &&  node ./dist/main.js",
+    "start-server": "pnpm build &&  node ./dist/main.js",
+    "start-server-win": "pnpm build-win &&  node ./dist/main.js",
     "dev-start": "nodemon -e ts --exec pnpm run start-server",
     "dev": "nodemon -e ts --exec pnpm run dev-start",
     "dev-win": "nodemon -e ts --exec pnpm run start-win",
