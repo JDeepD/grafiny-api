@@ -4,3 +4,6 @@ build
 dist
 .serverless
 .env
+.env.local
+.idea
+.npmrc

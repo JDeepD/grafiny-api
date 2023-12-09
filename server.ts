@@ -5,6 +5,7 @@ import morgan from "morgan";
 import cookieParser from "cookie-parser";
 import cookieSession from "cookie-session";
 import passport from "passport";
+import "dotenv/config";
 
 import * as Middlewares from "./src/middlewares";
 import * as Routers from "./src/routers";
@@ -15,12 +16,7 @@ const app = express();
 
 // Middlewares
 app
-  .use(
-    cors({
-      origin: "*",
-      credentials: true,
-    })
-  )
+  .use(cors())
   .use(helmet())
   .use(morgan("dev"))
   .use(express.json())
@@ -30,10 +26,8 @@ app
     cookieSession({
       name: "session",
       keys: [process.env.GRAFINY_KEY!],
-      sameSite: "none",
       maxAge: 3 * 24 * 60 * 60 * 1000,
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "prod",
+      secure: true,
     })
   )
   .use(passport.initialize())
