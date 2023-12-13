@@ -32,6 +32,7 @@ app
       name: "session",
       keys: [process.env.GRAFINY_KEY!],
       maxAge: 3 * 24 * 60 * 60 * 1000,
+      sameSite: "none",
       secure: true,
     })
   )
