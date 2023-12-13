@@ -24,6 +24,7 @@ app
         "https://www.thunderclient.com",
       ],
       credentials: true,
+      exposedHeaders: ["set-cookie"],
     })
   )
   .use(helmet())
