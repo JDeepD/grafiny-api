@@ -16,7 +16,12 @@ const app = express();
 
 // Middlewares
 app
-  .use(cors({ origin: ["http://localhost:3000/", "http://127.0.0.1:3000"] }))
+  .use(
+    cors({
+      origin: ["http://localhost:3000/", "http://127.0.0.1:3000"],
+      credentials: true,
+    })
+  )
   .use(helmet())
   .use(morgan("dev"))
   .use(express.json())
