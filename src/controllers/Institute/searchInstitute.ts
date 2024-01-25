@@ -9,6 +9,7 @@ const searchInstitute: Interfaces.Controllers.Async = async (
 ) => {
   try {
     const instituteName = req.query.institutename as string;
+    console.log(instituteName);
     if (!instituteName) {
       return res.json(Error.invalidDetails);
     }

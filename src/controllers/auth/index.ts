@@ -1,6 +1,5 @@
-import signUp from "./signup";
 import login from "./login";
 import logout from "./logout";
-import { adminSignUp, superAdminSignUp } from "./adminSignup";
+import { adminLogin, superAdminLogin } from "./adminLogin";
 
-export { signUp, login, logout, adminSignUp, superAdminSignUp };
+export { logout, login, adminLogin, superAdminLogin };

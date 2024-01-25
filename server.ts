@@ -3,23 +3,33 @@ import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
 import cookieParser from "cookie-parser";
-import cookieSession from "cookie-session";
-import passport from "passport";
 import "dotenv/config";
-
+import * as admin from "firebase-admin";
 import * as Middlewares from "./src/middlewares";
 import * as Routers from "./src/routers";
 import * as Constants from "./src/globals/constants";
-import * as Utils from "./src/utils";
+import fs from "fs";
+
+const serviceAccount = JSON.parse(
+  fs.readFileSync(
+    "./grafiny-1ad98-firebase-adminsdk-nx0m2-64fe154afd.json",
+    "utf8"
+  )
+);
+//import * as Utils from "./src/utils";
 
 const app = express();
 
 // Middlewares
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+});
+
 app
   .use(
     cors({
       origin: [
-        "http://localhost:3000/",
+        "http://localhost:3000",
         "http://127.0.0.1:3000",
         "https://www.thunderclient.com",
       ],
@@ -31,23 +41,7 @@ app
   .use(morgan("dev"))
   .use(express.json())
   .use(express.urlencoded({ extended: true }))
-  .use(cookieParser())
-  .use(
-    cookieSession({
-      name: "session",
-      keys: [process.env.GRAFINY_KEY!],
-      maxAge: 3 * 24 * 60 * 60 * 1000,
-      sameSite: "none",
-      secure: true,
-    })
-  )
-  .use(passport.initialize())
-  .use(passport.session());
-
-//passport
-passport.use(Utils.Auth.passport.passportLocalStrategy);
-passport.serializeUser(Utils.Auth.passport.serialiseUserFunction);
-passport.deserializeUser(Utils.Auth.passport.deserialiseUserFunction);
+  .use(cookieParser());
 
 // Routers
 app.use(`${Constants.System.ROOT}/`, Routers.Health);

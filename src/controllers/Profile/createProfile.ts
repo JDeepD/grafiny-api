@@ -5,8 +5,7 @@ import { User } from "@prisma/client";
 
 const createProfile: Interfaces.Controllers.Async = async (req, res, next) => {
   try {
-    const { scholarId, year, profilePic, instituteId } =
-      req.body as Interfaces.Profile;
+    const { scholarId, year, instituteId } = req.body as Interfaces.Profile;
     if (!scholarId || !year || !instituteId) {
       return res.json(Error.invalidDetails);
     }
@@ -30,7 +29,6 @@ const createProfile: Interfaces.Controllers.Async = async (req, res, next) => {
       data: {
         scholarId,
         year,
-        profilePic: profilePic ? profilePic : "",
         user: {
           connect: {
             id: user.id,
