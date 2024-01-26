@@ -8,13 +8,14 @@ const deleteInstitute: Interfaces.Controllers.Async = async (
   next
 ) => {
   try {
-    const name: string = req.query.institutename as string;
-    if (!name) {
+    const id: string = req.query.institutename as string;
+
+    if (!id) {
       return res.json(Error.invalidDetails);
     }
     const deletedInstitute = await Utils.prisma.institution.delete({
       where: {
-        name: name.toUpperCase(),
+        id,
       },
     });
 

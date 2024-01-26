@@ -26,6 +26,7 @@ model Profile {
   userId             String      @unique @db.ObjectId
   scholarId          Int
   uploadedItems      Items[]     @relation("uploadeditems")
+  uploadedItemIds    String[]
   institution        Institution @relation(fields: [instituteId], references: [id])
   instituteId        String      @db.ObjectId
   bookmarkedItems    Items[]     @relation("bookmarkeditems", fields: [bookmarkedItemsIds], references: [id])
@@ -35,6 +36,8 @@ model Profile {
   dislikedItems      Items[]     @relation("dislikeditems", fields: [dislikedItemIds], references: [id])
   dislikedItemIds    String[]    @db.ObjectId
   year               YEAR
+  Department         Department? @relation(fields: [departmentId], references: [id])
+  departmentId       String?     @db.ObjectId
 
   @@unique([scholarId, instituteId])
 }
@@ -42,6 +45,7 @@ model Profile {
 model Institution {
   id          String       @id @default(auto()) @map("_id") @db.ObjectId
   name        String       @unique
+  type        String?
   departments Department[]
   profile     Profile[]
 }
@@ -52,6 +56,7 @@ model Department {
   institution Institution @relation(fields: [instituteID], references: [id], onDelete: Cascade)
   instituteID String      @db.ObjectId
   courses     Course[]
+  Profile     Profile[]
 
   @@unique([instituteID, name])
 }

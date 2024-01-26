@@ -9,6 +9,7 @@ const createInstitute: Interfaces.Controllers.Async = async (
 ) => {
   try {
     const name: string = req.body.name;
+    const type: string = req.body.type;
     if (!name) {
       return res.json(Error.invalidDetails);
     }
@@ -16,6 +17,7 @@ const createInstitute: Interfaces.Controllers.Async = async (
     const existingInstitute = await Utils.prisma.institution.findFirst({
       where: {
         name: name.toUpperCase(),
+        type,
       },
     });
 
@@ -28,6 +30,7 @@ const createInstitute: Interfaces.Controllers.Async = async (
     const institute = await Utils.prisma.institution.create({
       data: {
         name: name.toUpperCase(),
+        type,
       },
     });
 

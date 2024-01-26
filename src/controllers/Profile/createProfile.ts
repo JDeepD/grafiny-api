@@ -14,14 +14,20 @@ const createProfile: Interfaces.Controllers.Async = async (req, res, next) => {
       where: {
         OR: [{ userId: user.id }, { instituteId, scholarId }],
       },
+      include: {
+        institution: {
+          select: {
+            name: true,
+          },
+        },
+      },
     });
 
     if (existingProfile) {
       return res.json(
-        Utils.Response.error(
-          "Profile With This Scholar Id Already Exists In Your Institute",
-          409
-        )
+        Utils.Response.success({
+          profile: existingProfile,
+        })
       );
     }
 
@@ -37,6 +43,13 @@ const createProfile: Interfaces.Controllers.Async = async (req, res, next) => {
         institution: {
           connect: {
             id: instituteId,
+          },
+        },
+      },
+      include: {
+        institution: {
+          select: {
+            name: true,
           },
         },
       },
