@@ -126,12 +126,17 @@ const handleUpload: RequestHandler = async (req: any, res: any) => {
               course: {
                 select: {
                   name: true,
-                  department: {
+                  semester: {
                     select: {
-                      name: true,
-                      institution: {
+                      semNumber: true,
+                      department: {
                         select: {
                           name: true,
+                          institution: {
+                            select: {
+                              name: true,
+                            },
+                          },
                         },
                       },
                     },

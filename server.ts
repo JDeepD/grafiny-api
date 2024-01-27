@@ -48,6 +48,7 @@ app.use(`${Constants.System.ROOT}/`, Routers.Health);
 app.use(`${Constants.System.ROOT}/auth`, Routers.authRouter);
 app.use(`${Constants.System.ROOT}/institute`, Routers.instituteRouter);
 app.use(`${Constants.System.ROOT}/department`, Routers.departmentRouter);
+app.use(`${Constants.System.ROOT}/semester`, Routers.semesterRouter);
 app.use(`${Constants.System.ROOT}/course`, Routers.courseRouter);
 app.use(`${Constants.System.ROOT}/topic`, Routers.topicRouter);
 app.use(`${Constants.System.ROOT}/items`, Routers.itemsRouter);

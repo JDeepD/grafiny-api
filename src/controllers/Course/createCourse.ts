@@ -4,33 +4,33 @@ import * as Error from "../../globals/errors";
 
 const createCourse: Interfaces.Controllers.Async = async (req, res, next) => {
   try {
-    const { name, id } = req.body as Interfaces.CourseAndTopic;
+    const { name, id, code } = req.body as Interfaces.Course;
 
-    if (!name || !id) {
+    if (!name || !id || !code) {
       return res.json(Error.invalidDetails);
     }
 
-    const department = await Utils.prisma.department.findFirst({
+    const semester = await Utils.prisma.semester.findFirst({
       where: {
         id,
       },
     });
 
-    if (!department) {
+    if (!semester) {
       return res.json(Error.invalidDetails);
     }
 
     const existingCourse = await Utils.prisma.course.findFirst({
       where: {
-        name,
-        departmentId: department.id,
+        code,
+        semesterId: semester.id,
       },
     });
 
     if (existingCourse) {
       return res.json(
         Utils.Response.error(
-          "Course With This Name Already Exists. Please Try a With Different Name",
+          "Course With This code Already Exists In This semester Please Try a With Different Name",
           409
         )
       );
@@ -39,9 +39,10 @@ const createCourse: Interfaces.Controllers.Async = async (req, res, next) => {
     const course = await Utils.prisma.course.create({
       data: {
         name,
-        department: {
+        code,
+        semester: {
           connect: {
-            id: department.id,
+            id: semester.id,
           },
         },
       },

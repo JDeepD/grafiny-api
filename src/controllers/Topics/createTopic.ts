@@ -4,7 +4,7 @@ import * as Error from "../../globals/errors";
 
 const createTopic: Interfaces.Controllers.Async = async (req, res, next) => {
   try {
-    const { name, id } = req.body as Interfaces.CourseAndTopic;
+    const { name, id } = req.body as Interfaces.Topic;
 
     if (!name || !id) {
       return res.json(Error.invalidDetails);

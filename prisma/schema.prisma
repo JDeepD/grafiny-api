@@ -36,8 +36,6 @@ model Profile {
   dislikedItems      Items[]     @relation("dislikeditems", fields: [dislikedItemIds], references: [id])
   dislikedItemIds    String[]    @db.ObjectId
   year               YEAR
-  Department         Department? @relation(fields: [departmentId], references: [id])
-  departmentId       String?     @db.ObjectId
 
   @@unique([scholarId, instituteId])
 }
@@ -55,20 +53,30 @@ model Department {
   name        String
   institution Institution @relation(fields: [instituteID], references: [id], onDelete: Cascade)
   instituteID String      @db.ObjectId
-  courses     Course[]
-  Profile     Profile[]
+  semester    Semester[]
 
   @@unique([instituteID, name])
 }
 
-model Course {
-  id           String     @id @default(auto()) @map("_id") @db.ObjectId //Incomplete
-  name         String
+model Semester {
+  id           String     @id @default(auto()) @map("_id") @db.ObjectId
+  semNumber    SEM
   department   Department @relation(fields: [departmentId], references: [id], onDelete: Cascade)
   departmentId String     @db.ObjectId
-  topic        Topic[]
+  course       Course[]
 
-  @@unique([departmentId, name])
+  @@unique([id, departmentId])
+}
+
+model Course {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId //Incomplete
+  name       String
+  code       String
+  semester   Semester @relation(fields: [semesterId], references: [id], onDelete: Cascade)
+  semesterId String   @db.ObjectId
+  topic      Topic[]
+
+  @@unique([semesterId, code])
 }
 
 model Topic {
@@ -114,6 +122,17 @@ enum YEAR {
   SECOND
   THIRD
   FOURTH
+}
+
+enum SEM {
+  FIRST
+  SECOND
+  THIRD
+  FOURTH
+  FIFTH
+  SIXTH
+  SEVENTH
+  EIGHTH
 }
 
 enum AUTH_LEVEL {

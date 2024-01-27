@@ -56,12 +56,17 @@ const searchItemsByNameInTopic: Interfaces.Controllers.Async = async (
             course: {
               select: {
                 name: true,
-                department: {
+                semester: {
                   select: {
-                    name: true,
-                    institution: {
+                    semNumber: true,
+                    department: {
                       select: {
                         name: true,
+                        institution: {
+                          select: {
+                            name: true,
+                          },
+                        },
                       },
                     },
                   },

@@ -37,6 +37,7 @@ const login: Interfaces.Controllers.Async = async (req, res) => {
       return res.json(Error.Auth.invalidCredentials);
     }
   } catch (err) {
+    console.log(err);
     return res.json(Utils.Response.error("Something went Wrong", 401));
   }
 };

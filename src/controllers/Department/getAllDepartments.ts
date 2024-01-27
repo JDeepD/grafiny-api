@@ -28,7 +28,7 @@ const getAllDepartments: Interfaces.Controllers.Async = async (
         instituteID: institute.id,
       },
       include: {
-        courses: true,
+        semester: true,
       },
     });
 
