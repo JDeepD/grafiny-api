@@ -8,21 +8,16 @@ import * as admin from "firebase-admin";
 import * as Middlewares from "./src/middlewares";
 import * as Routers from "./src/routers";
 import * as Constants from "./src/globals/constants";
-import fs from "fs";
-
-const serviceAccount = JSON.parse(
-  fs.readFileSync(
-    "./grafiny-1ad98-firebase-adminsdk-nx0m2-64fe154afd.json",
-    "utf8"
-  )
-);
-//import * as Utils from "./src/utils";
 
 const app = express();
 
 // Middlewares
 admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
+  credential: admin.credential.cert({
+    projectId: process.env.FIREBASE_PROJECT_ID,
+    clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+    privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, "\n"),
+  }),
 });
 
 app
