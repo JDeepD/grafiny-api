@@ -28,7 +28,28 @@ const adminLogin: Interfaces.Controllers.Async = async (req, res) => {
             authorisationLevel: AUTH_LEVEL.ADMIN,
           },
           include: {
-            profile: true,
+            profile: {
+              select: {
+                institution: {
+                  select: {
+                    name: true,
+                    id: true,
+                  },
+                },
+                scholarId: true,
+                uploadedItems: true,
+                uploadedItemIds: true,
+                dislikedItems: true,
+                dislikedItemIds: true,
+                bookmarkedItems: true,
+                bookmarkedItemsIds: true,
+                likedItems: true,
+                likedItemIds: true,
+                year: true,
+                userId: true,
+                id: true,
+              },
+            },
           },
         });
         return res.json(Utils.Response.success({ msg: user }));
@@ -53,10 +74,31 @@ const superAdminLogin: Interfaces.Controllers.Async = async (req, res) => {
           email: decodedValue.email,
         },
         include: {
-          profile: true,
+          profile: {
+            select: {
+              institution: {
+                select: {
+                  name: true,
+                  id: true,
+                },
+              },
+              scholarId: true,
+              uploadedItems: true,
+              uploadedItemIds: true,
+              dislikedItems: true,
+              dislikedItemIds: true,
+              bookmarkedItems: true,
+              bookmarkedItemsIds: true,
+              likedItems: true,
+              likedItemIds: true,
+              year: true,
+              userId: true,
+              id: true,
+            },
+          },
         },
       });
-
+      console.log(existingUser);
       if (!existingUser) {
         const user = await Utils.prisma.user.create({
           data: {
@@ -67,12 +109,32 @@ const superAdminLogin: Interfaces.Controllers.Async = async (req, res) => {
             authorisationLevel: AUTH_LEVEL.SUPERADMIN,
           },
           include: {
-            profile: true,
+            profile: {
+              select: {
+                institution: {
+                  select: {
+                    name: true,
+                    id: true,
+                  },
+                },
+                scholarId: true,
+                uploadedItems: true,
+                uploadedItemIds: true,
+                dislikedItems: true,
+                dislikedItemIds: true,
+                bookmarkedItems: true,
+                bookmarkedItemsIds: true,
+                likedItems: true,
+                likedItemIds: true,
+                year: true,
+                userId: true,
+                id: true,
+              },
+            },
           },
         });
         return res.json(Utils.Response.success({ msg: user }));
       }
-
       return res.json(Utils.Response.success({ msg: existingUser }));
     } else {
       return res.json(Error.Auth.invalidCredentials);

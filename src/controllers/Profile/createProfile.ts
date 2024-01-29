@@ -18,6 +18,7 @@ const createProfile: Interfaces.Controllers.Async = async (req, res, next) => {
         institution: {
           select: {
             name: true,
+            id: true,
           },
         },
       },

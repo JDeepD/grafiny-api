@@ -13,7 +13,28 @@ const login: Interfaces.Controllers.Async = async (req, res) => {
           email: decodedValue.email,
         },
         include: {
-          profile: true,
+          profile: {
+            select: {
+              institution: {
+                select: {
+                  name: true,
+                  id: true,
+                },
+              },
+              scholarId: true,
+              uploadedItems: true,
+              uploadedItemIds: true,
+              dislikedItems: true,
+              dislikedItemIds: true,
+              bookmarkedItems: true,
+              bookmarkedItemsIds: true,
+              likedItems: true,
+              likedItemIds: true,
+              year: true,
+              userId: true,
+              id: true,
+            },
+          },
         },
       });
 
@@ -26,7 +47,28 @@ const login: Interfaces.Controllers.Async = async (req, res) => {
             profilePic: decodedValue.picture,
           },
           include: {
-            profile: true,
+            profile: {
+              select: {
+                institution: {
+                  select: {
+                    name: true,
+                    id: true,
+                  },
+                },
+                scholarId: true,
+                uploadedItems: true,
+                uploadedItemIds: true,
+                dislikedItems: true,
+                dislikedItemIds: true,
+                bookmarkedItems: true,
+                bookmarkedItemsIds: true,
+                likedItems: true,
+                likedItemIds: true,
+                year: true,
+                userId: true,
+                id: true,
+              },
+            },
           },
         });
         return res.json(Utils.Response.success({ msg: user }));
