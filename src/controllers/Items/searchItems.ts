@@ -28,13 +28,6 @@ const searchItemsByName: Interfaces.Controllers.Async = async (
             scholarId: true,
           },
         },
-        dislikedBy: {
-          select: {
-            id: true,
-            userId: true,
-            scholarId: true,
-          },
-        },
         bookmarkedBy: {
           select: {
             id: true,

@@ -33,8 +33,6 @@ model Profile {
   bookmarkedItemsIds String[]    @db.ObjectId
   likedItems         Items[]     @relation("likeditems", fields: [likedItemIds], references: [id])
   likedItemIds       String[]    @db.ObjectId
-  dislikedItems      Items[]     @relation("dislikeditems", fields: [dislikedItemIds], references: [id])
-  dislikedItemIds    String[]    @db.ObjectId
   year               YEAR
 
   @@unique([scholarId, instituteId])
@@ -103,8 +101,6 @@ model Items {
   bookmarkedByIds String[]  @db.ObjectId
   likedBy         Profile[] @relation("likeditems", fields: [likedByIds], references: [id])
   likedByIds      String[]  @db.ObjectId
-  dislikedBy      Profile[] @relation("dislikeditems", fields: [dislikedByIds], references: [id])
-  dislikedByIds   String[]  @db.ObjectId
   createdAt       DateTime  @default(now())
 
   @@unique([topicId, name])

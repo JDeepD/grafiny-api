@@ -1,6 +1,8 @@
 interface Item {
-  name: string;
-  topicId: string;
+  itemName: string;
+  topicId: string | undefined;
+  topicName: string | undefined;
+  courseId: string | undefined;
 }
 
 export default Item;

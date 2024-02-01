@@ -8,28 +8,21 @@ const searchItemsByNameInTopic: Interfaces.Controllers.Async = async (
   next
 ) => {
   try {
-    const { name, topicId } = req.body as Interfaces.Item;
-    if (!name || !topicId) {
+    const { topicName, topicId } = req.body as Interfaces.Item;
+    if (!topicName || !topicId) {
       return res.json(Error.invalidDetails);
     }
     const items = await Utils.prisma.items.findMany({
       where: {
         topicId,
         name: {
-          contains: name,
+          contains: topicName,
           mode: "insensitive",
         },
       },
       include: {
         file: true,
         likedBy: {
-          select: {
-            id: true,
-            userId: true,
-            scholarId: true,
-          },
-        },
-        dislikedBy: {
           select: {
             id: true,
             userId: true,

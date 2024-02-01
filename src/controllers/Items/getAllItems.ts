@@ -14,13 +14,6 @@ const getAllItems: Interfaces.Controllers.Async = async (req, res, next) => {
               scholarId: true,
             },
           },
-          dislikedBy: {
-            select: {
-              id: true,
-              userId: true,
-              scholarId: true,
-            },
-          },
           bookmarkedBy: {
             select: {
               id: true,
@@ -76,13 +69,6 @@ const getAllItems: Interfaces.Controllers.Async = async (req, res, next) => {
         include: {
           file: true,
           likedBy: {
-            select: {
-              id: true,
-              userId: true,
-              scholarId: true,
-            },
-          },
-          dislikedBy: {
             select: {
               id: true,
               userId: true,

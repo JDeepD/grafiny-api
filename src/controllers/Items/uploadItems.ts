@@ -54,10 +54,133 @@ const handleUpload: RequestHandler = async (req: any, res: any) => {
         );
       }
 
-      const { name, topicId } = req.body as Interfaces.Item;
+      const { itemName, topicId, courseId, topicName } =
+        req.body as Interfaces.Item;
+
+      if (!topicId) {
+        if (!courseId || !topicName) {
+          return res.json(Error.invalidDetails);
+        } else {
+          const course = await Utils.prisma.course.findFirst({
+            where: {
+              id: courseId,
+            },
+          });
+
+          if (!course) {
+            return res.json(Error.invalidDetails);
+          }
+
+          const existingTopic = await Utils.prisma.topic.findFirst({
+            where: {
+              name: topicName,
+              courseId: course.id,
+            },
+          });
+
+          if (existingTopic) {
+            return res.json(
+              Utils.Response.error(
+                "Topic With This Name Already Exists. Please Try a With Different Name",
+                409
+              )
+            );
+          }
+
+          const topic = await Utils.prisma.topic.create({
+            data: {
+              name: topicName,
+              course: {
+                connect: {
+                  id: course.id,
+                },
+              },
+            },
+          });
+
+          //AWS Upload Function Starts Here
+          const results = await Utils.Upload.s3Upload(req.files);
+          // AWS Upload Function Ends Here
+          const newItem = await Utils.prisma.items.create({
+            data: {
+              name: itemName,
+              topic: {
+                connect: {
+                  id: topic.id,
+                },
+              },
+              profile: {
+                connect: {
+                  id: user.profile.id,
+                },
+              },
+              file: {
+                create: results,
+              },
+            },
+            include: {
+              file: true,
+              likedBy: {
+                select: {
+                  id: true,
+                  userId: true,
+                  scholarId: true,
+                },
+              },
+              bookmarkedBy: {
+                select: {
+                  id: true,
+                  userId: true,
+                  scholarId: true,
+                },
+              },
+              profile: {
+                select: {
+                  id: true,
+                  userId: true,
+                  scholarId: true,
+                },
+              },
+              topic: {
+                select: {
+                  name: true,
+                  course: {
+                    select: {
+                      name: true,
+                      semester: {
+                        select: {
+                          semNumber: true,
+                          department: {
+                            select: {
+                              name: true,
+                              institution: {
+                                select: {
+                                  name: true,
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          });
+
+          return res.json(
+            Utils.Response.success({
+              newItem,
+              msg: "Files Uploaded Successfull",
+            })
+          );
+        }
+      }
+
       const existingItem = await Utils.prisma.items.findFirst({
         where: {
-          name,
+          name: itemName,
           topicId,
         },
       });
@@ -75,7 +198,7 @@ const handleUpload: RequestHandler = async (req: any, res: any) => {
       // AWS Upload Function Ends Here
       const newItem = await Utils.prisma.items.create({
         data: {
-          name,
+          name: itemName,
           topic: {
             connect: {
               id: topicId,
@@ -93,13 +216,6 @@ const handleUpload: RequestHandler = async (req: any, res: any) => {
         include: {
           file: true,
           likedBy: {
-            select: {
-              id: true,
-              userId: true,
-              scholarId: true,
-            },
-          },
-          dislikedBy: {
             select: {
               id: true,
               userId: true,
