@@ -13,4 +13,9 @@ router.delete(
   isAuthenticated,
   Controllers.Items.deleteItemFolder
 );
+router.delete(
+  "/deleteAllInTopic",
+  isAuthenticated,
+  Controllers.Items.deleteAllItemsInTopic
+);
 export default router;

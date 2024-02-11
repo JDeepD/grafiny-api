@@ -25,7 +25,7 @@ const createDepartment: Interfaces.Controllers.Async = async (
 
     const existingDepartment = await Utils.prisma.department.findFirst({
       where: {
-        name,
+        name: name.toUpperCase(),
         instituteID: institute.id,
       },
     });
@@ -41,7 +41,7 @@ const createDepartment: Interfaces.Controllers.Async = async (
 
     const department = await Utils.prisma.department.create({
       data: {
-        name,
+        name: name.toUpperCase(),
         institution: {
           connect: {
             id: institute.id,

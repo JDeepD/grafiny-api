@@ -8,7 +8,7 @@ const deleteInstitute: Interfaces.Controllers.Async = async (
   next
 ) => {
   try {
-    const id: string = req.query.institutename as string;
+    const id: string = req.query.instituteId as string;
 
     if (!id) {
       return res.json(Error.invalidDetails);

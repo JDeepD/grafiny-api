@@ -22,9 +22,6 @@ const getSemester: Interfaces.Controllers.Async = async (req, res, next) => {
       where: {
         departmentId: department.id,
       },
-      include: {
-        course: true,
-      },
     });
 
     return res.json(

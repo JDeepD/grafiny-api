@@ -49,7 +49,7 @@ model Institution {
 model Department {
   id          String      @id @default(auto()) @map("_id") @db.ObjectId //Incomplete Model
   name        String
-  institution Institution @relation(fields: [instituteID], references: [id], onDelete: Cascade)
+  institution Institution @relation(fields: [instituteID], references: [id], onDelete: Restrict)
   instituteID String      @db.ObjectId
   semester    Semester[]
 
@@ -59,7 +59,7 @@ model Department {
 model Semester {
   id           String     @id @default(auto()) @map("_id") @db.ObjectId
   semNumber    SEM
-  department   Department @relation(fields: [departmentId], references: [id], onDelete: Cascade)
+  department   Department @relation(fields: [departmentId], references: [id], onDelete: Restrict)
   departmentId String     @db.ObjectId
   course       Course[]
 
@@ -70,7 +70,7 @@ model Course {
   id         String   @id @default(auto()) @map("_id") @db.ObjectId //Incomplete
   name       String
   code       String
-  semester   Semester @relation(fields: [semesterId], references: [id], onDelete: Cascade)
+  semester   Semester @relation(fields: [semesterId], references: [id], onDelete: Restrict)
   semesterId String   @db.ObjectId
   topic      Topic[]
 
@@ -80,7 +80,7 @@ model Course {
 model Topic {
   id       String  @id @default(auto()) @map("_id") @db.ObjectId //Incomplete
   name     String
-  course   Course  @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  course   Course  @relation(fields: [courseId], references: [id], onDelete: Restrict)
   courseId String  @db.ObjectId
   items    Items[]
 
@@ -95,7 +95,7 @@ model Items {
   modifiedAt      DateTime  @updatedAt()
   profile         Profile   @relation("uploadeditems", fields: [profileId], references: [id], onDelete: NoAction)
   profileId       String    @db.ObjectId
-  topic           Topic     @relation(fields: [topicId], references: [id], onDelete: Cascade)
+  topic           Topic     @relation(fields: [topicId], references: [id], onDelete: Restrict)
   topicId         String    @db.ObjectId
   bookmarkedBy    Profile[] @relation("bookmarkeditems", fields: [bookmarkedByIds], references: [id])
   bookmarkedByIds String[]  @db.ObjectId

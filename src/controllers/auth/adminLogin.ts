@@ -14,7 +14,26 @@ const adminLogin: Interfaces.Controllers.Async = async (req, res) => {
           email: decodedValue.email,
         },
         include: {
-          profile: true,
+          profile: {
+            select: {
+              institution: {
+                select: {
+                  name: true,
+                  id: true,
+                },
+              },
+              scholarId: true,
+              uploadedItems: true,
+              uploadedItemIds: true,
+              bookmarkedItems: true,
+              bookmarkedItemsIds: true,
+              likedItems: true,
+              likedItemIds: true,
+              year: true,
+              userId: true,
+              id: true,
+            },
+          },
         },
       });
 
@@ -39,8 +58,6 @@ const adminLogin: Interfaces.Controllers.Async = async (req, res) => {
                 scholarId: true,
                 uploadedItems: true,
                 uploadedItemIds: true,
-                dislikedItems: true,
-                dislikedItemIds: true,
                 bookmarkedItems: true,
                 bookmarkedItemsIds: true,
                 likedItems: true,
@@ -85,8 +102,6 @@ const superAdminLogin: Interfaces.Controllers.Async = async (req, res) => {
               scholarId: true,
               uploadedItems: true,
               uploadedItemIds: true,
-              dislikedItems: true,
-              dislikedItemIds: true,
               bookmarkedItems: true,
               bookmarkedItemsIds: true,
               likedItems: true,
@@ -120,8 +135,6 @@ const superAdminLogin: Interfaces.Controllers.Async = async (req, res) => {
                 scholarId: true,
                 uploadedItems: true,
                 uploadedItemIds: true,
-                dislikedItems: true,
-                dislikedItemIds: true,
                 bookmarkedItems: true,
                 bookmarkedItemsIds: true,
                 likedItems: true,
