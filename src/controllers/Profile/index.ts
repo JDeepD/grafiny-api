@@ -1,2 +1,3 @@
 import createProfile from "./createProfile";
-export { createProfile };
+import getProfile from "./getProfile";
+export { createProfile, getProfile };
