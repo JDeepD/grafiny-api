@@ -21,6 +21,21 @@ const createProfile: Interfaces.Controllers.Async = async (req, res, next) => {
             id: true,
           },
         },
+        uploadedItems: {
+          select: {
+            id: true,
+            file: true,
+            name: true,
+            uploadedAt: true,
+            modifiedAt: true,
+            topic: true,
+            topicId: true,
+            bookmarkedBy: true,
+            bookmarkedByIds: true,
+            likedBy: true,
+            likedByIds: true,
+          },
+        },
       },
     });
 
@@ -51,6 +66,22 @@ const createProfile: Interfaces.Controllers.Async = async (req, res, next) => {
         institution: {
           select: {
             name: true,
+            id: true,
+          },
+        },
+        uploadedItems: {
+          select: {
+            id: true,
+            file: true,
+            name: true,
+            uploadedAt: true,
+            modifiedAt: true,
+            topic: true,
+            topicId: true,
+            bookmarkedBy: true,
+            bookmarkedByIds: true,
+            likedBy: true,
+            likedByIds: true,
           },
         },
       },
