@@ -10,8 +10,8 @@ import {
 const router = express.Router();
 
 router.post("/create", isAuthenticated, createSemester);
-router.get("/getAll", getAllSemester);
-router.get("/get", getSemester);
+router.get("/getAll",getAllSemester);
+router.get("/get",getSemester);
 router.delete("/", isAuthenticated, deleteSemester);
 
 export default router;

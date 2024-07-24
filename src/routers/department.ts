@@ -10,7 +10,7 @@ router.post(
   Controllers.Department.createDepartment
 );
 router.get("/getAll", Controllers.Department.getAllDepartments);
-router.get("/get", Controllers.Department.getDepartment);
+router.get("/get",Controllers.Department.getDepartment);
 router.delete(
   "/",
   Middlewares.isAuthenticated,

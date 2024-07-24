@@ -11,7 +11,7 @@ const router = express.Router();
 
 router.post("/create", isAuthenticated, createTopic);
 router.get("/getAll", getAllTopics);
-router.get("/get", getTopic);
+router.get("/get",getTopic);
 router.delete("/", isAuthenticated, deleteTopic);
 
 export default router;
