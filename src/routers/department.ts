@@ -7,10 +7,11 @@ const router = express.Router();
 router.post(
   "/create",
   Middlewares.checkAdmin,
+  Middlewares.checkAdmin,
   Controllers.Department.createDepartment
 );
-router.get("/getAll", Controllers.Department.getAllDepartments);
-router.get("/get",Controllers.Department.getDepartment);
+router.get("/getAll",Middlewares.isAuthenticated, Controllers.Department.getAllDepartments);
+router.get("/get",Middlewares.isAuthenticated,Controllers.Department.getDepartment);
 router.delete(
   "/",
   Middlewares.isAuthenticated,
