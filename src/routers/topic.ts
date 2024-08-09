@@ -10,7 +10,7 @@ import {
 const router = express.Router();
 
 router.post("/create", isAuthenticated, createTopic);
-router.get("/getAll",isAuthenticated, getAllTopics);
+router.get("/getAll", isAuthenticated, getAllTopics);
 router.get("/get", isAuthenticated, getTopic);
 router.delete("/", isAuthenticated, deleteTopic);
 

@@ -10,8 +10,8 @@ import {
 const router: Router = Router();
 
 router.post("/create", isAuthenticated, checkSuperAdmin, createInstitute);
-router.get("/getAll", getAllInstitute); 
-router.get("/search",searchInstitute);
+router.get("/getAll", getAllInstitute);
+router.get("/search", searchInstitute);
 router.delete("/", isAuthenticated, checkSuperAdmin, deleteInstitute);
 
 export default router;

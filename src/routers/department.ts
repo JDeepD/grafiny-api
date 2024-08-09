@@ -10,8 +10,16 @@ router.post(
   Middlewares.checkAdmin,
   Controllers.Department.createDepartment
 );
-router.get("/getAll",Middlewares.isAuthenticated, Controllers.Department.getAllDepartments);
-router.get("/get",Middlewares.isAuthenticated,Controllers.Department.getDepartment);
+router.get(
+  "/getAll",
+  Middlewares.isAuthenticated,
+  Controllers.Department.getAllDepartments
+);
+router.get(
+  "/get",
+  Middlewares.isAuthenticated,
+  Controllers.Department.getDepartment
+);
 router.delete(
   "/",
   Middlewares.isAuthenticated,
