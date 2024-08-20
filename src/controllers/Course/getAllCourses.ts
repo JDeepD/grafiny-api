@@ -8,22 +8,25 @@ const getAllCourses: Interfaces.Controllers.Async = async (req, res, next) => {
     if (!id) {
       return res.json(Error.invalidDetails);
     }
-    const department = await Utils.prisma.department.findFirst({
+    const semester = await Utils.prisma.semester.findFirst({
       where: {
         id,
       },
     });
 
-    if (!department) {
+    if (!semester) {
       return res.json(Error.invalidDetails);
     }
 
     const courses = await Utils.prisma.course.findMany({
       where: {
-        departmentId: department.id,
+        semesterId: semester.id,
       },
       include: {
         topic: true,
+      },
+      orderBy: {
+        name: "asc",
       },
     });
 

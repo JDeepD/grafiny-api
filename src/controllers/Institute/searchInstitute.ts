@@ -8,7 +8,8 @@ const searchInstitute: Interfaces.Controllers.Async = async (
   next
 ) => {
   try {
-    const instituteName = req.query.institutename as string;
+    const instituteName = req.query.instituteName as string;
+    console.log(instituteName);
     if (!instituteName) {
       return res.json(Error.invalidDetails);
     }

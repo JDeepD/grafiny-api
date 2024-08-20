@@ -13,7 +13,7 @@ const getDepartment: Interfaces.Controllers.Async = async (req, res, next) => {
         id,
       },
       include: {
-        courses: true,
+        semester: true,
       },
     });
 

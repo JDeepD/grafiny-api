@@ -6,4 +6,15 @@ import * as Institute from "./Institute";
 import * as Items from "./Items";
 import * as Topics from "./Topics";
 import * as Profile from "./Profile";
-export { Health, Auth, Course, Department, Institute, Items, Topics, Profile };
+import * as Semester from "./Semester";
+export {
+  Health,
+  Auth,
+  Course,
+  Department,
+  Institute,
+  Items,
+  Topics,
+  Profile,
+  Semester,
+};

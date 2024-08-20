@@ -1,19 +1,14 @@
 import * as Interfaces from "../../interfaces";
-import * as Utils from "../../utils/index";
+import * as Utils from "../../utils";
 import * as Error from "../../globals/errors";
 
-const deleteInstitute: Interfaces.Controllers.Async = async (
-  req,
-  res,
-  next
-) => {
+const deleteSemester: Interfaces.Controllers.Async = async (req, res, next) => {
   try {
-    const id: string = req.query.instituteId as string;
-
+    const id: string = req.query.id as string;
     if (!id) {
       return res.json(Error.invalidDetails);
     }
-    const deletedInstitute = await Utils.prisma.institution.delete({
+    const deletedSemester = await Utils.prisma.semester.delete({
       where: {
         id,
       },
@@ -21,7 +16,7 @@ const deleteInstitute: Interfaces.Controllers.Async = async (
 
     return res.json(
       Utils.Response.success({
-        msg: deletedInstitute,
+        msg: deletedSemester,
       })
     );
   } catch (err) {
@@ -29,4 +24,4 @@ const deleteInstitute: Interfaces.Controllers.Async = async (
   }
 };
 
-export default deleteInstitute;
+export default deleteSemester;

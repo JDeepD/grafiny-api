@@ -5,8 +5,7 @@ import { User } from "@prisma/client";
 
 const createProfile: Interfaces.Controllers.Async = async (req, res, next) => {
   try {
-    const { scholarId, year, profilePic, instituteId } =
-      req.body as Interfaces.Profile;
+    const { scholarId, year, instituteId } = req.body as Interfaces.Profile;
     if (!scholarId || !year || !instituteId) {
       return res.json(Error.invalidDetails);
     }
@@ -15,14 +14,36 @@ const createProfile: Interfaces.Controllers.Async = async (req, res, next) => {
       where: {
         OR: [{ userId: user.id }, { instituteId, scholarId }],
       },
+      include: {
+        institution: {
+          select: {
+            name: true,
+            id: true,
+          },
+        },
+        uploadedItems: {
+          select: {
+            id: true,
+            file: true,
+            name: true,
+            uploadedAt: true,
+            modifiedAt: true,
+            topic: true,
+            topicId: true,
+            bookmarkedBy: true,
+            bookmarkedByIds: true,
+            likedBy: true,
+            likedByIds: true,
+          },
+        },
+      },
     });
 
     if (existingProfile) {
       return res.json(
-        Utils.Response.error(
-          "Profile With This Scholar Id Already Exists In Your Institute",
-          409
-        )
+        Utils.Response.success({
+          profile: existingProfile,
+        })
       );
     }
 
@@ -30,7 +51,6 @@ const createProfile: Interfaces.Controllers.Async = async (req, res, next) => {
       data: {
         scholarId,
         year,
-        profilePic: profilePic ? profilePic : "",
         user: {
           connect: {
             id: user.id,
@@ -39,6 +59,29 @@ const createProfile: Interfaces.Controllers.Async = async (req, res, next) => {
         institution: {
           connect: {
             id: instituteId,
+          },
+        },
+      },
+      include: {
+        institution: {
+          select: {
+            name: true,
+            id: true,
+          },
+        },
+        uploadedItems: {
+          select: {
+            id: true,
+            file: true,
+            name: true,
+            uploadedAt: true,
+            modifiedAt: true,
+            topic: true,
+            topicId: true,
+            bookmarkedBy: true,
+            bookmarkedByIds: true,
+            likedBy: true,
+            likedByIds: true,
           },
         },
       },

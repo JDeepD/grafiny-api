@@ -1,10 +1,21 @@
-import * as Utils from "../utils/response";
+import * as Utils from "../utils";
+import * as admin from "firebase-admin";
+const isAuthenticated = async (req: any, res: any, next: any) => {
+  try {
+    const token = req.headers.authorization.split(" ")[1];
+    const decodedValue = await admin.auth().verifyIdToken(token);
 
-const isAuthenticated = (req: any, _res: any, next: any) => {
-  if (req.isAuthenticated()) {
-    return next();
+    if (decodedValue) {
+      const user = await Utils.prisma.user.findFirst({
+        where: { email: decodedValue.email },
+      });
+      req.user = user;
+      return next();
+    }
+    return res.json(Utils.Response.error("Unauthorised", 401));
+  } catch (err) {
+    return res.json(Utils.Response.error("Unauthorised", 401));
   }
-  return next(Utils.error("Unauthorized", 401));
 };
 
 export default isAuthenticated;

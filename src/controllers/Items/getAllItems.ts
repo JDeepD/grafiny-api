@@ -14,13 +14,6 @@ const getAllItems: Interfaces.Controllers.Async = async (req, res, next) => {
               scholarId: true,
             },
           },
-          dislikedBy: {
-            select: {
-              id: true,
-              userId: true,
-              scholarId: true,
-            },
-          },
           bookmarkedBy: {
             select: {
               id: true,
@@ -41,12 +34,17 @@ const getAllItems: Interfaces.Controllers.Async = async (req, res, next) => {
               course: {
                 select: {
                   name: true,
-                  department: {
+                  semester: {
                     select: {
-                      name: true,
-                      institution: {
+                      semNumber: true,
+                      department: {
                         select: {
                           name: true,
+                          institution: {
+                            select: {
+                              name: true,
+                            },
+                          },
                         },
                       },
                     },
@@ -77,13 +75,6 @@ const getAllItems: Interfaces.Controllers.Async = async (req, res, next) => {
               scholarId: true,
             },
           },
-          dislikedBy: {
-            select: {
-              id: true,
-              userId: true,
-              scholarId: true,
-            },
-          },
           bookmarkedBy: {
             select: {
               id: true,
@@ -104,12 +95,17 @@ const getAllItems: Interfaces.Controllers.Async = async (req, res, next) => {
               course: {
                 select: {
                   name: true,
-                  department: {
+                  semester: {
                     select: {
-                      name: true,
-                      institution: {
+                      semNumber: true,
+                      department: {
                         select: {
                           name: true,
+                          institution: {
+                            select: {
+                              name: true,
+                            },
+                          },
                         },
                       },
                     },

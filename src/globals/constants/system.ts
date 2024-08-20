@@ -1,4 +1,4 @@
-const ROOT = "/api/v1";
+const ROOT = "";
 const DOCS = "./docs/swagger.yaml";
 
 export { ROOT, DOCS };

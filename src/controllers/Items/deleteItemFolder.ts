@@ -21,7 +21,6 @@ const deleteItemFolder: Interfaces.Controllers.Async = async (
         file: true,
       },
     });
-
     if (!item) {
       return res.json(Error.invalidDetails);
     }

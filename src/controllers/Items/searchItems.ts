@@ -28,13 +28,6 @@ const searchItemsByName: Interfaces.Controllers.Async = async (
             scholarId: true,
           },
         },
-        dislikedBy: {
-          select: {
-            id: true,
-            userId: true,
-            scholarId: true,
-          },
-        },
         bookmarkedBy: {
           select: {
             id: true,
@@ -55,12 +48,17 @@ const searchItemsByName: Interfaces.Controllers.Async = async (
             course: {
               select: {
                 name: true,
-                department: {
+                semester: {
                   select: {
-                    name: true,
-                    institution: {
+                    semNumber: true,
+                    department: {
                       select: {
                         name: true,
+                        institution: {
+                          select: {
+                            name: true,
+                          },
+                        },
                       },
                     },
                   },

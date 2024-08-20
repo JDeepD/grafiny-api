@@ -10,8 +10,8 @@ import {
 const router = express.Router();
 
 router.post("/create", isAuthenticated, createTopic);
-router.get("/getAll", getAllTopics);
-router.get("/get", getTopic);
+router.get("/getAll", isAuthenticated, getAllTopics);
+router.get("/get", isAuthenticated, getTopic);
 router.delete("/", isAuthenticated, deleteTopic);
 
 export default router;
